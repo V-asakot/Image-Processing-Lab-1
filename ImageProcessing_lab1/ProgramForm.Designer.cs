@@ -133,7 +133,7 @@ namespace ImageProcessing_lab1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 461);
+            this.ClientSize = new System.Drawing.Size(734, 411);
             this.Controls.Add(this.checkBoxGreen);
             this.Controls.Add(this.checkBoxBlue);
             this.Controls.Add(this.checkBoxRed);
@@ -142,8 +142,8 @@ namespace ImageProcessing_lab1
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureBoxResult);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MaximumSize = new System.Drawing.Size(800, 500);
-            this.MinimumSize = new System.Drawing.Size(800, 500);
+            this.MaximumSize = new System.Drawing.Size(750, 450);
+            this.MinimumSize = new System.Drawing.Size(750, 450);
             this.Name = "ProgramForm";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxResult)).EndInit();
