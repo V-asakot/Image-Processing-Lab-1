@@ -68,9 +68,8 @@ namespace ImageProcessing_lab1
 
         private void ModeChanged(object sender, EventArgs e) => Process();
 
-        private void ThirdPictureClicked(object sender, EventArgs e)
-        {
-            SaveImage();
+        private void ThirdPictureClicked(object sender, EventArgs e) {
+            if (ResultImage != null) SaveImage(); 
         }
 
         private void Process()
