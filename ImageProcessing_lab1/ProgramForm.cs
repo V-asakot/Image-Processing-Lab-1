@@ -37,7 +37,7 @@ namespace ImageProcessing_lab1
             InitializeComponent();
             var itemsNames = new string[]
             {
-                "Попиксельно сумма",
+                "Попиксельная сумма",
                 "Произведение",
                 "Среднее-арифметическое",
                 "Минимум",
