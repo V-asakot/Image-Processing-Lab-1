@@ -56,10 +56,11 @@ namespace ImageProcessing_lab1
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBox1.Location = new System.Drawing.Point(487, 35);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(319, 162);
+            this.pictureBox1.Size = new System.Drawing.Size(160, 160);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
@@ -68,10 +69,11 @@ namespace ImageProcessing_lab1
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBox2.Location = new System.Drawing.Point(487, 201);
             this.pictureBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(319, 162);
+            this.pictureBox2.Size = new System.Drawing.Size(160, 160);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 4;
             this.pictureBox2.TabStop = false;
@@ -84,7 +86,7 @@ namespace ImageProcessing_lab1
             this.comboBoxModes.Location = new System.Drawing.Point(486, 367);
             this.comboBoxModes.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBoxModes.Name = "comboBoxModes";
-            this.comboBoxModes.Size = new System.Drawing.Size(320, 23);
+            this.comboBoxModes.Size = new System.Drawing.Size(160, 23);
             this.comboBoxModes.TabIndex = 5;
             this.comboBoxModes.SelectedIndexChanged += new System.EventHandler(this.ModeChanged);
             // 
@@ -93,7 +95,7 @@ namespace ImageProcessing_lab1
             this.checkBoxRed.AutoSize = true;
             this.checkBoxRed.Checked = true;
             this.checkBoxRed.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxRed.Location = new System.Drawing.Point(821, 65);
+            this.checkBoxRed.Location = new System.Drawing.Point(653, 35);
             this.checkBoxRed.Name = "checkBoxRed";
             this.checkBoxRed.Size = new System.Drawing.Size(75, 19);
             this.checkBoxRed.TabIndex = 6;
@@ -106,7 +108,7 @@ namespace ImageProcessing_lab1
             this.checkBoxBlue.AutoSize = true;
             this.checkBoxBlue.Checked = true;
             this.checkBoxBlue.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxBlue.Location = new System.Drawing.Point(821, 115);
+            this.checkBoxBlue.Location = new System.Drawing.Point(653, 85);
             this.checkBoxBlue.Name = "checkBoxBlue";
             this.checkBoxBlue.Size = new System.Drawing.Size(62, 19);
             this.checkBoxBlue.TabIndex = 7;
@@ -119,7 +121,7 @@ namespace ImageProcessing_lab1
             this.checkBoxGreen.AutoSize = true;
             this.checkBoxGreen.Checked = true;
             this.checkBoxGreen.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxGreen.Location = new System.Drawing.Point(821, 90);
+            this.checkBoxGreen.Location = new System.Drawing.Point(653, 60);
             this.checkBoxGreen.Name = "checkBoxGreen";
             this.checkBoxGreen.Size = new System.Drawing.Size(75, 19);
             this.checkBoxGreen.TabIndex = 8;
@@ -131,7 +133,7 @@ namespace ImageProcessing_lab1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(909, 401);
+            this.ClientSize = new System.Drawing.Size(784, 461);
             this.Controls.Add(this.checkBoxGreen);
             this.Controls.Add(this.checkBoxBlue);
             this.Controls.Add(this.checkBoxRed);
@@ -140,8 +142,8 @@ namespace ImageProcessing_lab1
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureBoxResult);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.MaximumSize = new System.Drawing.Size(925, 440);
-            this.MinimumSize = new System.Drawing.Size(925, 440);
+            this.MaximumSize = new System.Drawing.Size(800, 500);
+            this.MinimumSize = new System.Drawing.Size(800, 500);
             this.Name = "ProgramForm";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxResult)).EndInit();

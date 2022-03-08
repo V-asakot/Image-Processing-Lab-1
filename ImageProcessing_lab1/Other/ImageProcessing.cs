@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace ImageProcessing_lab1
             var newSize = secondBitmap != null ? new Size(Math.Max(firstBitmap.Width, secondBitmap.Width), Math.Max(firstBitmap.Height, secondBitmap.Height)) : firstBitmap.Size;
             firstBitmap = ResizeImage(firstBitmap, newSize);
             secondBitmap = secondBitmap != null ? ResizeImage(secondBitmap, newSize): null;
-            return ProcessPixels(firstBitmap, secondBitmap, selectedChannels,mode);        
+            return FastProcessPixels(firstBitmap, secondBitmap, selectedChannels,mode);        
         }
         public static bool isMaskMode(Mode mode)
         {
@@ -81,6 +82,79 @@ namespace ImageProcessing_lab1
             }
 
             return result;
+        }
+
+        private static Bitmap FastProcessPixels(Bitmap firstBitmap, Bitmap secondBitmap, bool[] selectedChannels, Mode mode)
+        {
+            unsafe
+            {
+                var size = firstBitmap.Size;
+                var result = new Bitmap(size.Width, size.Height);
+                var mask = CreateMask(size, mode);
+                BitmapData bitmapData1 = firstBitmap.LockBits(new Rectangle(0, 0, size.Width, size.Height), ImageLockMode.ReadWrite, firstBitmap.PixelFormat);
+                BitmapData bitmapData2 = secondBitmap != null ? secondBitmap.LockBits(new Rectangle(0, 0, size.Width, size.Height), ImageLockMode.ReadWrite, secondBitmap.PixelFormat) : null;
+                BitmapData bitmapDataResult = result.LockBits(new Rectangle(0, 0, size.Width, size.Height), ImageLockMode.ReadWrite, result.PixelFormat);
+                BitmapData bitmapDataMask = mask != null ? mask.LockBits(new Rectangle(0, 0, size.Width, size.Height), ImageLockMode.ReadWrite, mask.PixelFormat) : null;
+
+                int bytesPerPixel = Bitmap.GetPixelFormatSize(firstBitmap.PixelFormat) / 8;
+                int heightInPixels = size.Height;
+                int widthInBytes = size.Width * bytesPerPixel;
+
+                byte* firstPixel1 = (byte*)bitmapData1.Scan0;
+                byte* firstPixel2 = bitmapData2 != null ? (byte*)bitmapData2.Scan0 : null;
+                byte* firstPixelResult = (byte*)bitmapDataResult.Scan0;
+                byte* firstPixelMask = bitmapDataMask != null ? (byte*)bitmapDataMask.Scan0 : null;
+
+                for (int y = 0; y < heightInPixels; y++)
+                {
+                    byte* currentLine1 = firstPixel1 + (y * bitmapData1.Stride);
+                    byte* currentLine2 = (byte*)(firstPixel2 != null ? firstPixel2 + (y * bitmapData2.Stride) : null);
+                    byte* currentLineMask = (byte*)(firstPixelMask != null ? firstPixelMask + (y * bitmapDataMask.Stride) : null);
+                    byte* currentLineResult = firstPixelResult + (y * bitmapDataResult.Stride);
+
+                    for (int x = 0; x < widthInBytes; x = x + bytesPerPixel)
+                    {
+                        var color1 = Color.FromArgb(
+                             selectedChannels[0] ? currentLine1[x+2] : 0,
+                             selectedChannels[1] ? currentLine1[x+1] : 0,
+                             selectedChannels[2] ? currentLine1[x] : 0
+                         );
+
+                        var color2 = secondBitmap != null ? Color.FromArgb(
+                             selectedChannels[0] ? currentLine2[x+2] : 0,
+                             selectedChannels[1] ? currentLine2[x+1] : 0,
+                             selectedChannels[2] ? currentLine2[x] : 0
+                         ) : Color.White;
+
+                        int maskColor = mask != null ? currentLineMask[x] : 0;
+
+                        var color = mode switch
+                        {
+                            Mode.Summ => SummProcess(color1, color2),
+                            Mode.Mult => MultProcess(color1, color2),
+                            Mode.Avg => AvgProcess(color1, color2),
+                            Mode.Min => MinProcess(color1, color2),
+                            Mode.Max => MaxProcess(color1, color2),
+                            Mode.Cirle => MaskProcess(color1, maskColor),
+                            Mode.Square => MaskProcess(color1, maskColor),
+                            Mode.Rectangle => MaskProcess(color1, maskColor)
+                        };
+
+                        currentLineResult[x] = color.B;
+                        currentLineResult[x + 1] = color.G;
+                        currentLineResult[x + 2] = color.R;
+                        currentLineResult[x + 3] = color.A;
+                    }
+                }
+                firstBitmap.UnlockBits(bitmapData1);
+                if(secondBitmap != null) secondBitmap.UnlockBits(bitmapData2);
+                result.UnlockBits(bitmapDataResult);
+                if (bitmapDataMask != null)
+                {
+                    mask.UnlockBits(bitmapDataMask);
+                }
+                return result;
+            }
         }
 
         private static Color SummProcess(Color color1, Color color2) => Color.FromArgb(Clamp(color1.R + color2.R), Clamp(color1.G + color2.G), Clamp(color1.B + color2.B));

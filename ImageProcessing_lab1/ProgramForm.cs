@@ -79,11 +79,15 @@ namespace ImageProcessing_lab1
             if(SecondImage == null && !ImageProcessing.isMaskMode(Mode)) 
             {
                 ResultImage = FirstImage;
+                ResizeResultImage(FirstImage);
                 return;
             }
             var result = ImageProcessing.Process(FirstImage, SecondImage, SelectedChannels, Mode);
             ResultImage = result;
+            ResizeResultImage(result);
         }
+
+        private void ResizeResultImage(Bitmap image) => pictureBoxResult.Size = new Size(pictureBoxResult.Width, (int)((float)image.Height / (float)image.Width * pictureBoxResult.Width));
 
         private Bitmap SelectImage() 
         {
