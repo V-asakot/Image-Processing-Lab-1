@@ -74,7 +74,10 @@ namespace ImageProcessing_lab1
 
         private void Process()
         {
-            if (FirstImage == null) return;
+            if (FirstImage == null) {
+                ResultImage = null;
+                return; 
+            }
             if(SecondImage == null && !ImageProcessing.isMaskMode(Mode)) 
             {
                 ResultImage = FirstImage;
