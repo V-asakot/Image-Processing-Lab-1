@@ -36,7 +36,6 @@ namespace ImageProcessing_lab1
             }
             catch
             {
-                Console.WriteLine("Bitmap could not be resized");
                 return input;
             }
         }
